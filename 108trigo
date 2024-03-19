@@ -1,0 +1,35 @@
+#!/usr/bin/python3
+##
+## EPITECH PROJECT, 2023
+## 106bombyx
+## File description:
+## bunny population
+##
+
+import sys
+
+def print_usage():
+    print("USAGE")
+    print("\t./108trigo fun a0 a1 a2 ...")
+    print("DESCRIPTION")
+    print("\tfun\tfunction to be applied, among at least \"EXP\", \"COS\", \"SIN\", \"COSH\"")
+    print("\t\tand \"SINH\"")
+    print("\tai\tpolinomial denominator defined by its coefficients")
+
+def main():
+    if len(sys.argv) == 2:
+        if sys.argv[1] == "-h":
+            print_usage()
+        else:
+            raise Exception("Unrecognized argument")
+    elif len(sys.argv) % 2 == 1 and len(sys.argv) > 2:
+        pass
+    else:
+        raise Exception("Invalid amount of parameters")
+
+if __name__ == "__main__":
+    try:
+        main()
+    except Exception as e:
+        print(e, file=sys.stderr)
+        exit(84)
