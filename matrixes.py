@@ -116,6 +116,18 @@ class Matrix:
             div += 2
             sign *= -1
         return result
+
+    def cos(self, precision:int=20):
+        result = create_identity(self.width)
+        mat = (self.copy()) * self
+        sign = -1
+        div = 2
+        for i in range(precision):
+            result +=  mat / (sign * factorial(div))
+            mat *= self * self
+            div += 2
+            sign *= -1
+        return result
     
     def __add__(self, this):
         Matrix._check_matrix(this)
