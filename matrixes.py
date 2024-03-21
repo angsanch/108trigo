@@ -5,6 +5,8 @@
 ## manage matrixes
 ##
 
+from math import factorial
+
 class Matrix:
     matrix:list
     width:int
@@ -28,7 +30,7 @@ class Matrix:
         if not isinstance(matrix, Matrix):
             raise TypeError("A matrix is needed")
 
-    def _check_square(matrix):
+    def check_square(matrix):
         Matrix._check_matrix(matrix)
         if matrix.width != matrix.height:
             raise ValueError("Matrixes must be square")
@@ -42,7 +44,7 @@ class Matrix:
             raise ValueError("Incompatible matrix sizes")
 
     def _det(matrix):
-        Matrix._check_square(matrix)
+        Matrix.check_square(matrix)
         if matrix.width == 1:
             return matrix.matrix[0][0]
         elif matrix.width == 2:
@@ -87,6 +89,22 @@ class Matrix:
             result += [round(j, 0) for j in i]
         return result
 
+    def exp(self, precision:int=20):
+        result = create_identity(self.width)
+        mat = self.copy()
+        div = 1
+        for i in range(precision):
+            result += mat / div
+            mat *= self
+            div *= i + 2
+        return result
+
+    def sinh(self, precision:int=20):
+        return (self.exp(precision) - (self * -1).exp(precision)) / 2
+    
+    def cosh(self, precision:int=20):
+        return (self.exp(precision) + (self * -1).exp(precision)) / 2
+
     def __add__(self, this):
         Matrix._check_matrix(this)
         self._check_same_size(this)
@@ -106,14 +124,25 @@ class Matrix:
         return Matrix(self.width, self.height, result)
 
     def __mul__(self, this):
-        Matrix._check_matrix(this)
-        self._check_mul_compatible(this)
-        result = []
-        for i in range(self.height):
-            for j in range(this.width):
-                result.append(combine_lists(self.matrix[i],
-                    [k[j] for k in this.matrix]))
-        return Matrix(self.height, this.width, result)
+        if isinstance(this, Matrix):
+            Matrix._check_matrix(this)
+            self._check_mul_compatible(this)
+            result = []
+            for i in range(self.height):
+                for j in range(this.width):
+                    result.append(combine_lists(self.matrix[i],
+                        [k[j] for k in this.matrix]))
+            return Matrix(self.height, this.width, result)
+        else:
+            return Matrix(self.width, self.height, [i * this for i in self.to_list()])
+
+    def __pow__(self, this):
+        if not isinstance(this, int):
+            raise TypeError("Exponent must be an int")
+        result = self.copy()
+        for _ in range(this):
+            result *= self
+        return result
 
     def __truediv__(self, this):
         if isinstance(this, Matrix):
@@ -123,14 +152,24 @@ class Matrix:
         result = []
         for i in range(self.height):
             for j in range(self.width):
-                result.append(self.matrix[j][i] / this)
+                result.append(self.matrix[i][j] / this)
         return Matrix(self.width, self.height, result)
 
     def __str__(self):
-        lines = ["\t".join([f"{int(j):d}" for j in i])
+        lines = ["\t".join([f"{float(j):.2f}" for j in i])
             for i in self.matrix]
         return "\n".join(lines)
 
+    def copy(self):
+        return Matrix(self.width, self.height, self.to_list())
+
+def create_identity(size:int):
+    nums = []
+    part = [1] + [0 for _ in range(size)]
+    for _ in range(size - 1):
+        nums += part
+    nums.append(1)
+    return Matrix(size, size, nums)
 
 def matrix_print_asf(m):
     lines = ["\t".join([f"{j}" for j in i])
