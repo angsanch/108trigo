@@ -106,16 +106,17 @@ class Matrix:
         return (self.exp(precision) + (self * -1).exp(precision)) / 2
 
     def sin(self, precision:int=20):
-        result = create_identity(self.width)
-        mat = self.copy()
+        result = self.copy
+        mat = result * self * self
         div = 3
         sign = -1
         for i in range(precision):
-            result += sign * (mat / abs(div))
+            result += mat / (sign * factorial(div))
+            mat *= self * self
             div += 2
             sign *= -1
         return result
-
+    
     def __add__(self, this):
         Matrix._check_matrix(this)
         self._check_same_size(this)
