@@ -10,7 +10,7 @@ import sys
 import matrixes
 import parse
 import math
-from math import factorial#borrar, es para el facotorial
+from math import factorial
 
 def print_usage():
     print("USAGE")
@@ -18,22 +18,22 @@ def print_usage():
     print("DESCRIPTION")
     print("\tfun\tfunction to be applied, among at least \"EXP\", \"COS\", \"SIN\", \"COSH\"")
     print("\t\tand \"SINH\"")
-    print("\tai\tpolinomial denominator defined by its coefficients")
+    print("\tai\tpolinomial denominator defined by its coeficients")
 
 def functions(data):
     size = int(math.sqrt(len(data["matrix"])))
     square_matrix = matrixes.Matrix(size, size, data["matrix"])
 
     if data["func"] == "EXP":
-        result = square_matrix.exp(40)
+        result = square_matrix.exp(80)
     if data["func"] == "COS":
-        result = square_matrix.cos(40)
+        result = square_matrix.cos(80)
     if data["func"] == "SIN":
-        result = square_matrix.sin(40)
+        result = square_matrix.sin(80)
     if data["func"] == "COSH":
-        result = square_matrix.cosh(40)
+        result = square_matrix.cosh(80)
     if data["func"] == "SINH":
-        result = square_matrix.sinh(40)
+        result = square_matrix.sinh(80)
     print(result)
 
 def main():
