@@ -101,7 +101,7 @@ class Matrix:
 
     def sinh(self, precision:int=20):
         return (self.exp(precision) - (self * -1).exp(precision)) / 2
-    
+
     def cosh(self, precision:int=20):
         return (self.exp(precision) + (self * -1).exp(precision)) / 2
 
@@ -128,7 +128,7 @@ class Matrix:
             div += 2
             sign *= -1
         return result
-    
+
     def __add__(self, this):
         Matrix._check_matrix(this)
         self._check_same_size(this)
