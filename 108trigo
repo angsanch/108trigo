@@ -25,15 +25,15 @@ def functions(data):
     square_matrix = matrixes.Matrix(size, size, data["matrix"])
 
     if data["func"] == "EXP":
-        result = square_matrix.exp(150)
+        result = square_matrix.exp(40)
     if data["func"] == "COS":
-        result = square_matrix.cos(150)
+        result = square_matrix.cos(40)
     if data["func"] == "SIN":
-        result = square.matrix.sin(150)
+        result = square_matrix.sin(40)
     if data["func"] == "COSH":
-        result = square_matrix.cosh(150)
+        result = square_matrix.cosh(40)
     if data["func"] == "SINH":
-        result = square_matrix.sinh(150)
+        result = square_matrix.sinh(40)
     print(result)
 
 def main():

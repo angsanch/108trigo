@@ -106,7 +106,7 @@ class Matrix:
         return (self.exp(precision) + (self * -1).exp(precision)) / 2
 
     def sin(self, precision:int=20):
-        result = self.copy
+        result = self.copy()
         mat = result * self * self
         div = 3
         sign = -1
